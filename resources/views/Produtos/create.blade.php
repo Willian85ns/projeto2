@@ -2,23 +2,123 @@
 
 @section('content')
 
-    <div class="row">
 
-        <div class="col-xs-12 margin-tb">
+<br>
+
+<div class="row">
+
+    <div class="col-lg-12 margin-tb">
+
+        <div class="pull-left">
 
             <br>
 
             <br>
 
+            <h2>Novo Produto</h2>
+
             <br>
 
-            <div class="pull-right">
+        </div>
 
-                <a class="btn btn-success" href="{{ route('produtos.create') }}"> Novo Produto</a>
+        <div class="pull-right">
+
+            <a class="btn btn-primary" href="{{ route('produtos.index') }}"> Voltar</a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<br>
+
+   
+
+@if ($errors->any())
+
+    <div class="alert alert-danger">
+
+        <strong>Eita!</strong> Tem algum problema com os dados fornecidos.<br><br>
+
+        <ul>
+
+            @foreach ($errors->all() as $error)
+
+                <li>{{ $error }}</li>
+
+            @endforeach
+
+        </ul>
+
+    </div>
+
+@endif
+
+   
+
+<form action="{{ route('produtos.store') }}" method="POST">
+
+    @csrf
+
+ 
+
+     <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Descrição:</strong>
+
+                <input type="text" name="descricao" class="form-control" placeholder="Descrição">
 
             </div>
 
-            <br>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Qtd:</strong>
+
+                <input type="number" min="0" max="99999" step="1" name="qtd" class="form-control" placeholder="Qtd">
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Custo:</strong>
+
+                <input type="number" format="currency" step="0.01" name="precoUnitario" class="form-control" placeholder="Custo">
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>Venda:</strong>
+
+                <input type="number" format="currency" step="0.01" name="precoVenda" class="form-control" placeholder="Venda">
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+
+                <br>
+
+                <button type="submit" class="btn btn-primary">Salvar</button>
 
         </div>
 
@@ -26,86 +126,6 @@
 
    
 
-    @if ($message = Session::get('success'))
-
-        <div class="alert alert-success">
-
-            <p>{{ $message }}</p>
-
-        </div>
-
-    @endif
-
-   
-
-    <table class="table table-bordered table-hover table-striped">
-
-        <tr>
-
-            <th>ID</th>
-
-            <th>Descrição</th>
-
-            <th>QTD</th>
-
-            <th>Custo</th>
-
-            <th>Venda</th>
-
-            <th width="280px">Ações</th>
-
-        </tr>
-
-        @foreach ($produtos as $produto)
-
-        <tr>
-
-            <td>{{ ++$i }}</td>
-
-            <td>{{ $produto->descricao }}</td>
-
-            <td>{{ $produto->qtd }}</td>
-
-            <td>{{ $produto->precoUnitario }}</td>
-
-            <td>{{ $produto->precoVenda }}</td>
-
-            <td>
-
-                <form action="{{ route('produtos.destroy',$produto->id) }}" method="POST">
-
-   
-
-                    <a class="btn btn-info" href="{{ route('produtos.show',$produto->id) }}">Exibir</a>
-
-   
-
-                    <a class="btn btn-primary" href="{{ route('produtos.edit',$produto->id) }}">Editar</a>
-
-   
-
-                    @csrf
-
-                    @method('DELETE')
-
-     
-
-                    <button type="submit" class="btn btn-danger">Excluir</button>
-
-                </form>
-
-            </td>
-
-        </tr>
-
-        @endforeach
-
-    </table>
-
-   
-
-    {{ $produtos->links() }}
-
-     
+</form>
 
 @endsection
